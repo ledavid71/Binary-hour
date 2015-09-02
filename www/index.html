@@ -1,0 +1,410 @@
+<html>
+<head>
+    <title>Binary Hour</title>
+    <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.0.1.min.css" />
+    <script type="text/javascript" src="js/jquery-1.7.js"></script>
+     <script type="text/javascript" src="js/iscroll.js"></script> 
+    <!-- <script type="text/javascript" src="main.js"></script> -->
+    <script type="text/javascript" src="js/jquery.mobile-1.0.1.min.js"></script>
+<!-- This reference to phonegap.js will allow for code hints as long as the current site has been configured as a mobile application. 
+	 To configure the site as a mobile application, go to Site -> Mobile Applications -> Configure Application Framework... -->
+<script src="phonegap-1.4.1.js" type="text/javascript"></script>
+<style>
+body {
+	background:url(pattern-bg.jpg)!important;
+}
+#table {
+	width: 75px;
+	margin-top:50px;
+}
+</style>
+<script>
+var audioElement = document.createElement('audio');
+audioElement.setAttribute('src', 'beep7.mp3');
+var sound = 0;
+var colornumber=0;
+//Add the images
+if(colornumber===0){
+var blue=new Image();
+blue.src="blue.png";
+var grey=new Image();
+grey.src="grey.png";
+}
+if(colornumber===1){
+var blue=new Image();
+blue.src="red.png";
+var grey=new Image();
+grey.src="redgrey.png";
+}
+//Make the binaryclock
+function binaryclock(img,number) {
+	if ((number%2)==1) {
+		eval("document."+img+"1.src=blue.src");
+		eval("document."+img+"1.style.opacity=1");
+	}
+	else {
+		eval("document."+img+"1.src=grey.src");
+	}
+	if (number==2 || number==3 || number==6 || number==7) {
+		eval("document."+img+"2.src=blue.src");
+	}
+	else {
+		eval("document."+img+"2.src=grey.src");
+	}
+	if (number>3 && number<8) {
+		eval("document."+img+"3.src=blue.src");
+	}
+	else {
+		eval("document."+img+"3.src=grey.src");
+	}
+	if (number>7) {
+		eval("document."+img+"4.src=blue.src");
+	}
+	else {
+		eval("document."+img+"4.src=grey.src");
+	}
+}
+
+//Make a function that involves everything with a timeout
+function start() {
+	//Get the date
+	var d = new Date();
+
+	//Assign each character in the date to a variable
+	var hr1=Math.floor(d.getHours()/10);
+	var hr2=d.getHours() % 10;
+	var min1=Math.floor(d.getMinutes()/10);
+	var min2=d.getMinutes() % 10;
+	var sec1=Math.floor(d.getSeconds()/10);
+	var sec2=d.getSeconds() % 10;
+	
+	binaryclock('hr1',hr1);
+	binaryclock('hr2',hr2);
+	binaryclock('min1',min1);
+	binaryclock('min2',min2);
+	binaryclock('sec1',sec1);
+	binaryclock('sec2',sec2);
+	setTimeout("start()",1000);
+	if(sound===1){
+	playSound();
+	}
+	
+}
+
+ function playSound() {
+audioElement.play();
+ }
+function changevalue(){
+	if(sound===0){
+		sound=1;
+		showStuff('ok');
+		hideStuff('no');
+				}
+	}
+	function changevalue2(){
+	if(sound===1){
+		sound=0;
+			showStuff('no');
+		hideStuff('ok');
+		}
+	}
+	
+function updateTotal() 
+{ 
+ // Validate that the browser knows getElementById 
+ if(!document.getElementById ) return; 
+ // Get the "pages" select box 
+ var pagesObj = document.getElementById("pages"); 
+ // Validate that the object exists 
+ if(!pagesObj ) return;  
+ // Get the options array. This works for both 
+ // single select and multi select boxes 
+ if( typeof(pagesObj.options) == "undefined" || pagesObj.options == null ) return; 
+ var o = pagesObj.options; 
+ // Get the selected options into an array 
+ var s = new Array(); 
+ for( var i = 0; i < o.length; i++ ) 
+ { 
+  if( o[i].selected ) 
+  { 
+   s[s.length] = o[i].value; 
+  } 
+ } 
+ // s now contains an array of the selected values. 
+ // If nothing was selected, the array length is 0 
+ if( s.length == 0 ) 
+ { 
+  alert("You must select a value."); 
+ } 
+ else 
+ { 
+  for( var i = 0; i < s.length; i++ ) 
+  { 
+   // Do whatever you want with the values here 
+   var value=s[i];
+   if(value==="blue"){
+	colornumber=0; 
+	changecolor();
+	} 
+    if(value==="red"){
+	colornumber=1; 
+	changecolor();
+	} 
+	    if(value==="orange"){
+	colornumber=2; 
+	changecolor();
+	}
+	     if(value==="green"){
+	colornumber=3; 
+	changecolor();
+	} 
+	    if(value==="pink"){
+	colornumber=4; 
+	changecolor();
+	} 
+	    if(value==="purple"){
+	colornumber=5; 
+	changecolor();
+	} 
+	    if(value==="yellow"){
+	colornumber=6; 
+	changecolor();
+	} 
+  } 
+ } 
+} 
+function changecolor(){
+if(colornumber===0){
+blue.src="blue.png";
+grey.src="grey.png";
+}
+if(colornumber===1){
+blue.src="red.png";
+grey.src="redgrey.png";
+}
+if(colornumber===2){
+blue.src="orange.png";
+grey.src="orangegrey.png";
+}
+if(colornumber===3){
+blue.src="green.png";
+grey.src="greengrey.png";
+}
+if(colornumber===4){
+blue.src="pink.png";
+grey.src="pinkgrey.png";
+}
+if(colornumber===5){
+blue.src="purple.png";
+grey.src="purplegrey.png";
+}
+if(colornumber===6){
+blue.src="yellow.png";
+grey.src="yellowgrey.png";
+}
+}
+function showStuff(id) {
+		document.getElementById(id).style.display = 'block';
+  	}
+	function hideStuff(id) {
+		document.getElementById(id).style.display = 'none';
+	}
+</script>
+<script type="text/javascript">
+    touchMove = function(event) {
+        // Prevent scrolling on this element
+        event.preventDefault();
+    }
+<!--
+
+function updateClock ( )
+{
+  var currentTime = new Date ( );
+
+  var currentHours = currentTime.getHours ( );
+  var currentMinutes = currentTime.getMinutes ( );
+  var currentSeconds = currentTime.getSeconds ( );
+
+  // Pad the minutes and seconds with leading zeros, if required
+  currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+  currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+
+  // Choose either "AM" or "PM" as appropriate
+  var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+
+  // Convert the hours component to 12-hour format if needed
+  currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+
+  // Convert an hours component of "0" to "12"
+  currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+
+  // Compose the string for display
+  var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+
+  // Update the time display
+  document.getElementById("clock").firstChild.nodeValue = currentTimeString;
+}
+
+// -->
+//newcode
+    $(function(){
+      
+      // Set Inital orientation
+      // get the initial orientation from window which
+      // returns 0 for portrait and 1 for landscape
+      if(window.orientation == 0){
+      var ori = "portrait";
+      }else{
+      var ori = "landscape";
+      }
+      changeOrientation(ori);
+      
+      // Orientation Change
+      // When orientation changes event is triggered
+      // exposing an orientation property of either
+      // landscape or portrait
+      $('body').bind('orientationchange',function(event){
+                     changeOrientation(event.orientation)
+                     })
+      
+      // Change the style dependengt on orientation
+      function changeOrientation(ori){
+      // Remove all classes separated by spaces
+     if(ori==="landscape"){
+      document.getElementById('footer').style.display = 'none';
+        document.getElementById('page').style.width = '480px';
+       document.getElementById('page2').style.width = '480px';
+       document.getElementById('page3').style.width = '480px';
+      }else{
+      document.getElementById('footer').style.display = 'block';
+       document.getElementById('page').style.width = '320px';
+      document.getElementById('page2').style.width = '320px';
+      document.getElementById('page3').style.width = '320px';
+      }
+      }
+      
+      }); 
+</script>
+
+</head>
+<body onLoad="start(); updateClock(); setInterval('updateClock()', 1000 )">
+<div data-role="page" id="page">
+<div id="contentpage" data-role="content" ontouchmove="touchMove(event);">
+<center>	
+<table width="60px" cellspacing="5px" class="ui-bar" id="table" style="vertical-align:central;"><tr>
+
+<!-- Hours column 1 -->
+<td valign="bottom">
+<img src="grey.png" name="hr14" vspace="5" style="display: none;"><br />
+<img src="grey.png" name="hr13" vspace="5" style="display: none;"><br />
+<img src="grey.png" name="hr12" vspace="5"><br />
+<img src="grey.png" name="hr11" vspace="5">
+</td>
+
+<!-- Hours column 2 -->
+<td valign="bottom" style="padding-right:10px">
+<img src="grey.png" name="hr24" vspace="5"><br />
+<img src="grey.png" name="hr23" vspace="5"><br />
+<img src="grey.png" name="hr22" vspace="5"><br />
+<img src="grey.png" name="hr21" vspace="5">
+</td>
+
+<!-- Minutes column 1 -->
+<td valign="bottom">
+<img src="grey.png" name="min14" vspace="5" style="display: none;"><br />
+<img src="grey.png" name="min13" vspace="5"><br />
+<img src="grey.png" name="min12" vspace="5"><br />
+<img src="grey.png" name="min11" vspace="5">
+</td>
+
+<!-- Minutes column 2 -->
+<td valign="bottom" style="padding-right:10px">
+<img src="grey.png" name="min24" vspace="5"><br />
+<img src="grey.png" name="min23" vspace="5"><br />
+<img src="grey.png" name="min22" vspace="5"><br />
+<img src="grey.png" name="min21" vspace="5">
+</td>
+
+<!-- Seconds column 1 -->
+<td valign="bottom">
+<img src="grey.png" name="sec14" vspace="5" style="display: none;"><br />
+<img src="grey.png" name="sec13" vspace="5"><br />
+<img src="grey.png" name="sec12" vspace="5"><br />
+<img src="grey.png" name="sec11" vspace="5">
+</td>
+
+<!-- Seconds column 2 -->
+<td valign="bottom" style="padding-right:10px">
+<img src="grey.png" name="sec24" vspace="5"><br />
+<img src="grey.png" name="sec23" vspace="5"><br />
+<img src="grey.png" name="sec22" vspace="5"><br />
+<img src="grey.png" name="sec21" vspace="5">
+</td>
+
+</tr></table>
+<span id="clock" style="color:#CCCCCC;font-size:36px; font-weight:bold; display:none;">&nbsp;</span>
+<span id="dummy"></span>
+</center>
+</div>
+    <div data-role="footer" id="footer" style="display:block;position:fixed;bottom:0;width:100%!important;background:none;border:none;">
+<a style="margin-left:10px; margin-bottom:5px;" href="#page2"><img src="options.png"/></a>
+<a style="float:right;margin-right:10px; margin-bottom:5px;" href="#page3"><img src="question.png"/></a>
+</div>
+</div>
+  
+<div data-role="page" id="page2">
+	<div data-role="header">
+        <a href="javascript:javascript:history.go(-1)" data-role="button" data-icon="back">Done</a>
+		<h1>Options</h1>
+	</div>
+	<div id="contentpage2" data-role="content" style="color:#FFFFFF">
+    <center>
+	  <div data-role="controlgroup" data-type="horizontal">
+       <h4>Visual Aid:<img id="ok2" style="display:none;" src="ok.png"/> <img id="no2" style="display:block;" src="no.png"></h4> 
+	    <button onClick="showStuff('clock'); showStuff('ok2');hideStuff('no2')">Show</button>
+	    <button onClick="hideStuff('clock'); showStuff('no2');hideStuff('ok2')">Hide</button>
+      </div>
+	
+	  <div data-role="fieldcontain">
+	    <label for="selectmenu" class="select"><h4>Color:</h4></label>
+	    <select name="selectmenu" onChange="updateTotal()" id="pages">
+	      <option value="blue">Blue</option>
+	      <option value="red" >Red</option>
+	      <option value="orange">Orange</option>
+          <option value="green">Green</option>
+          <option value="pink">Pink</option>
+          <option value="purple">Purple</option>
+          <option value="yellow">Yellow</option>
+        </select>
+      </div>
+	  <div data-role="fieldcontain">
+	    <div data-role="controlgroup" data-type="horizontal">
+        <h4>Sound: <img id="ok" style="display:none;" src="ok.png"/> <img id="no" style="display:block;" src="no.png"></h4> 
+	      <button  onClick="changevalue()">On</button>
+	      <button  onClick="changevalue2()">Off</button>
+        </div>
+
+      </div>
+      
+</center> </div>
+</div>
+<div data-role="page" id="page3">
+	<div data-role="header">
+    <a href="javascript:javascript:history.go(-1)" data-icon="back">Back</a>
+		<h1>How to use</h1>
+	</div>
+    <div id="wrapper">
+	<div id="contentpage3" data-role="content" style="color:#FFFFFF">
+<center>
+    
+<img src="example.png"/><br>
+Hour represented above:<br>
+
+<span style="font-size:36px; font-weight:bold">10:37:49 AM</span><br><br>
+Decode each binary digit. The clock is divided into three sections, each containing two columns of lights. The first section displays hours, the second minutes, and the final section tells the seconds. The first column in each section represents the first digit (10's place) and the second column displays the second digit (or 1's place). Each column is composed of 2-4 lights, each representing a power of two. Starting at the bottom, the first light represents 1, the second represents 2, the third is 4, and the top light represents 8. In the picture, you can easily see this by the numbers to the left of each row.
+Add the corresponding values of every light in the column that is lit to find the appropriate number. For example, if the bottom three lights are lit, the number is 4 (third row) + 2 (second row) + 1 (bottom row) = 7. </center>
+    </div>
+        </div>
+    </div>
+</body>
+</html>

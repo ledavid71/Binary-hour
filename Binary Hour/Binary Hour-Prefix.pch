@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Binary Hour' target in the 'Binary Hour' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif
